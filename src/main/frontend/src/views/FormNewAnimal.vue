@@ -1,21 +1,40 @@
 <script setup>
 import {Field , Form,ErrorMessage} from 'vee-validate';
-// export default{
-//   components:{
-//     Form,
-//     Field,
-//   },
-  // methods:{
+import PayloadAnimal from '@/services/PayloadAnimal';
+import { reactive } from 'vue';
+
    function onSubmit(values){
       console.log(values,null,2);
         }
    function validateForm(value){
-    //si el campo esta vacio 
+  
     if(!value){
       return ' This field is required';
     }
     return true;
    }
+
+   const animal = reactive({
+    name:"",
+    date:"",
+    country:"",
+    type:"",
+    gender:"",
+    family:""
+   });
+
+  function send(){
+
+    let animalUpdate = new PayloadAnimal();
+      animal.name,
+      animal.date,
+      animal.country,
+      animal.type,
+      animal.gender,
+      animal.family
+    console.log(animalUpdate);
+   }
+
 
 
 </script>
@@ -24,7 +43,7 @@ import {Field , Form,ErrorMessage} from 'vee-validate';
 
 <template>
   <div class="main">
-    <Form @submit="onSubmit" class="form__wrapper">
+    <Form @submit="send" class="form__wrapper">
       <div class="form__img">
         <img src="../assets/img/img-form.jpg" alt="photo-form" />
       </div>
@@ -34,24 +53,28 @@ import {Field , Form,ErrorMessage} from 'vee-validate';
         </div>
         <div class="form__fields">
           <div class="form__group">
-            <Field type="text" class="form__input" placeholder="Name" name="name" :rules="validateForm"/>
+            <Field type="text" class="form__input" placeholder="Name" name="name" v-model="animal.name" :rules="validateForm"/>
             <ErrorMessage id="error" name="name" />
             <span class="form__line"></span>
           </div>
           <div class="form__group">
-            <Field type="text" class="form__input" placeholder="Type" name="type"/>
+            <Field type="text" class="form__input" placeholder="Type" v-model="animal.type" name="type"/>
             <span class="form__line"></span>
           </div>
           <div class="form__group">
-            <Field type="text" class="form__input" placeholder="Family" name="family"/>
+            <Field type="text" class="form__input" placeholder="Family" v-model="animal.family" name="family"/>
             <span class="form__line"></span>
           </div>
           <div class="form__group">
-            <Field type="text" class="form__input" placeholder="Gender" name="gender"/>
+            <Field type="text" class="form__input" placeholder="Gender" v-model="animal.gender" name="gender"/>
             <span class="form__line"></span>
           </div>
           <div class="form__group">
-            <Field type="text" class="form__input" placeholder="Date" name="Date"/>
+            <Field type="text" class="form__input" placeholder="Date" v-model="animal.date" name="date"/>
+            <span class="form__line"></span>
+          </div>
+          <div class="form__group">
+            <Field type="text" class="form__input" placeholder="country" v-model="animal.country" name="country"/>
             <span class="form__line"></span>
           </div>
         </div>
